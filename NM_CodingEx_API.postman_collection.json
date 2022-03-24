@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "59b874dc-e838-408d-82c5-77037e3968d6",
+		"name": "NM_CodingEx_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_Data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Verify RC should be 200 upon successfull request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eql(200);",
+							"});",
+							"",
+							"pm.environment.set(\"userId\",jsonData.userId);",
+							"pm.environment.set(\"title\",jsonData.title);",
+							"pm.environment.set(\"body\",jsonData.body);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating a resource",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"userId\", pm.variables.replaceIn(\"{{$randomInt}}\"));",
+							"",
+							"pm.environment.set(\"title\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));",
+							"",
+							"pm.environment.set(\"body\", pm.variables.replaceIn(\"{{$randomPhrase}}\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Verify RC should be 201 upon successfull request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eql(201);",
+							"});",
+							"",
+							"pm.test(\"Verify userID matched with stored data\", function () {",
+							"    pm.expect(jsonData.userId).to.be.eql(environment.userId);",
+							"});",
+							"",
+							"pm.test(\"verify that response body has an ID\", function (){",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"})",
+							"",
+							"pm.test(\"Verify title matched with stored data\", function () {",
+							"    pm.expect(jsonData.title).to.be.eql(environment.title);",
+							"});",
+							"",
+							"pm.test(\"Verify body matched with stored data\", function () {",
+							"    pm.expect(jsonData.body).to.be.eql(environment.body);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"{{userId}}\",\n    \"id\": \"\",\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update resources",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"title\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));",
+							"",
+							"pm.environment.set(\"body\", pm.variables.replaceIn(\"{{$randomPhrase}}\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Verify RC should be 200 upon successfull request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Verify userID matched with stored data\", function () {",
+							"    pm.expect(jsonData.userId).to.be.eql(environment.userId);",
+							"});",
+							"",
+							"pm.test(\"verify that response body has an ID\", function (){",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"})",
+							"",
+							"pm.test(\"Verify title matched with stored data\", function () {",
+							"    pm.expect(jsonData.title).to.be.eql(environment.title);",
+							"});",
+							"",
+							"pm.test(\"Verify body matched with stored data\", function () {",
+							"    pm.expect(jsonData.body).to.be.eql(environment.body);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"{{userId}}\",\n    \"id\": \"\",\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Verify RC should be 200 upon successfull request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Verify response body is empty\", function () {",
+							"    pm.expect(jsonData).is.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
