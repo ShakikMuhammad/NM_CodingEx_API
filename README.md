@@ -50,6 +50,7 @@ xv.	Go to cloned folder/ NM_CodeChallenge/NM_CodingEx_API/newman
 xvi.	Open the .html file in any browser
 xvii.	You will see the Newman Run Dashboard like the screenshot in following page:
 
+![image](https://github.com/ShakikMuhammad/NM_CodingEx_API/assets/96020266/1360f283-5f6b-4d39-8ea9-939532289b51)
 
 
 
